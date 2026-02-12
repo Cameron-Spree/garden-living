@@ -8,6 +8,12 @@ const PORT = Number(process.env.PORT ?? 4000);
 const JWT_SECRET = process.env.JWT_SECRET ?? 'dev-secret';
 
 let repo = inMemoryRepo;
+function applyCors(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+}
+
 if (process.env.DATABASE_URL) {
   try {
     repo = await createPostgresRepo(process.env.DATABASE_URL);
@@ -18,6 +24,7 @@ if (process.env.DATABASE_URL) {
 }
 
 function json(res, status, body) {
+  applyCors(res);
   res.writeHead(status, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(body));
 }
@@ -53,6 +60,12 @@ function getAuthUser(req) {
 }
 
 const server = http.createServer(async (req, res) => {
+  if (req.method === 'OPTIONS') {
+    applyCors(res);
+    res.writeHead(204);
+    res.end();
+    return;
+  }
   if (req.method === 'GET' && req.url === '/health') return json(res, 200, { ok: true });
 
   if (req.method === 'POST' && req.url === '/auth/register') {

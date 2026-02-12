@@ -4,6 +4,8 @@ const required = [
   'apps/api/src/index.js',
   'apps/api/migrations/001_init.sql',
   'apps/mobile/App.js',
+  'apps/web/index.html',
+  'apps/web/main.js',
   'docker-compose.yml',
   'README.md'
 ];
