@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Garden Living",
+    "slug": "garden-living",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "jsEngine": "hermes"
+  }
+}
