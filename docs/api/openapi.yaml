@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: Garden Living API
+  version: 0.1.0
+servers:
+  - url: https://api.gardenliving.app
+paths:
+  /v1/tasks/today:
+    get:
+      summary: List today's tasks
+      parameters:
+        - in: query
+          name: timezone
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task list
+  /v1/tasks/{taskId}/complete:
+    post:
+      summary: Complete a task
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: string
+                offlineCreatedAt:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Completion recorded
+
+  /v1/feed/posts:
+    get:
+      summary: Fetch paginated feed
+      parameters:
+        - in: query
+          name: cursor
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Feed page
+    post:
+      summary: Publish post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [caption, imageUrl]
+              properties:
+                caption:
+                  type: string
+                imageUrl:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Post created
+
+  /v1/questions:
+    get:
+      summary: List Q&A questions
+      responses:
+        '200':
+          description: Questions list
+    post:
+      summary: Ask a question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, body, category]
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                category:
+                  type: string
+                imageUrl:
+                  type: string
+      responses:
+        '201':
+          description: Question created
+
+  /v1/questions/{questionId}/answers:
+    post:
+      summary: Submit answer
+      parameters:
+        - in: path
+          name: questionId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [body]
+              properties:
+                body:
+                  type: string
+      responses:
+        '201':
+          description: Answer created
+
+  /v1/questions/{questionId}/accept/{answerId}:
+    post:
+      summary: Accept answer and grant reputation
+      parameters:
+        - in: path
+          name: questionId
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: path
+          name: answerId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Answer accepted
+
+  /v1/streak:
+    get:
+      summary: Fetch streak snapshot
+      responses:
+        '200':
+          description: Current streak card
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
