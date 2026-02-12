@@ -237,3 +237,11 @@ Instead of making gamification a separate layer, make **"Care Score"** the unive
 - Completing real tasks, helping others, and successful swaps all increase Care Score.
 - Care Score unlocks profile prestige, marketplace trust boosts, and expert privileges.
 - This aligns behavior across utility, community, and monetization while discouraging vanity-only engagement.
+
+## 10) Execution Artifacts
+
+Implementation-ready docs have been added:
+- `docs/mvp-spec.md` (MVP scope, stories, acceptance criteria)
+- `docs/backend-schema.sql` (initial PostgreSQL schema)
+- `docs/api/openapi.yaml` (v0.1 API contract)
+- `docs/implementation-plan.md` (sprint-based delivery plan)
