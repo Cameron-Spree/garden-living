@@ -245,3 +245,7 @@ Implementation-ready docs have been added:
 - `docs/backend-schema.sql` (initial PostgreSQL schema)
 - `docs/api/openapi.yaml` (v0.1 API contract)
 - `docs/implementation-plan.md` (sprint-based delivery plan)
+
+## 11) Delivery Workflow
+
+See `docs/delivery-workflow.md` for the phased execution model, team shape, timeline ranges, and weekly decision cadence to build the full vision iteratively.
